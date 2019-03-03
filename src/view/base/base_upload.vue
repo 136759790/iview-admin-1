@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <div class="demo-upload-list" v-for="item in fileList">
+    <div class="demo-upload-list" :key="item" v-for="item in fileList">
         <template>
             <img :src="item.path">
             <div class="demo-upload-list-cover">
@@ -27,7 +27,7 @@
 
 <script>
 import config from '@/config' 
-import { getUpload,getUploadIdsByRef,getRefId} from '@/api/base/upload'
+import { getUpload,getUploadIdsByRef,getRefId,delUpload} from '@/api/base/upload'
 const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
 export default {
     props:{
@@ -53,6 +53,18 @@ export default {
     }
   },
   methods: {
+    handleRemove(item){
+        if(item.id){
+            delUpload(item.id).then(res => {
+                if(res.data.status ==1){
+                    this.$Message.success("删除成功");
+                    this.handleGetFile(this.upid)
+                }
+            });
+        }else{
+            this.$Message.success("获取不到该图片，请检查");
+        }
+    },
     handleOkUpload(res,file,fileList){
         let id=res.data.id
         let url_path = baseUrl+"/upload/file/"+id
@@ -66,7 +78,7 @@ export default {
                     this.fileList=[];
                     arr.forEach(element => {
                         let url_path = baseUrl+"/upload/file/"+element
-                        this.fileList.push({path:url_path})
+                        this.fileList.push({path:url_path,id:element})
                     });
                 }
             })

@@ -17,7 +17,7 @@ import { getOptions} from '@/api/base/select'
 export default {
     props:{
         code:String,
-        value:String
+        value:String,
     },
   data () {
     return {

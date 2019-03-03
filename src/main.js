@@ -15,6 +15,23 @@ import TreeTable from 'tree-table-vue'
 import axios from 'axios'
 import qs from 'qs';
 
+import VueAMap from 'vue-amap';
+Vue.use(VueAMap);
+
+// 初始化vue-amap
+VueAMap.initAMapApiLoader({
+  // 高德的key
+  key: 'dc00616ada372d786bfe1936329d4896',
+  // 插件集合
+  plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor'],
+  // 高德 sdk 版本，默认为 1.4.4
+  v: '1.4.4'
+});
+VueAMap.initAMapApiLoader({
+  key: 'dc00616ada372d786bfe1936329d4896',
+  plugin: ['AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType',],
+  uiVersion: '1.0.11' // 版本号
+});
 Vue.prototype.$ajax = axios;
 Vue.prototype.$qs = qs;
 // 实际打包时应该不引入mock
