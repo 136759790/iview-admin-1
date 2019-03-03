@@ -53,13 +53,13 @@
                 <Col span="12">
                     <FormItem label="生产日期：" prop="create_time" label-position="top">
                         <br/>
-                        <DatePicker type="month" format="yyyy年MM月" @on-change="handleCreateTime"  v-model="form.edit.create_time" placeholder="选择生产日期" style="width: 200px"></DatePicker>
+                        <DatePicker type="month" format="yyyy-MM" @on-change="handleCreateTime"  v-model="form.edit.create_time" placeholder="选择生产日期" style="width: 200px"></DatePicker>
                     </FormItem>
                 </Col>
                 <Col span="12">
                     <FormItem label="出厂日期：" prop="product_time" label-position="left">
                         <br/>
-                        <DatePicker format="yyyy年MM月" @on-change="handleProductTime"  v-model="form.edit.product_time"  type="month" placeholder="选择出厂日期" style="width: 200px"></DatePicker>
+                        <DatePicker format="yyyy-MM" @on-change="handleProductTime"  v-model="form.edit.product_time"  type="month" placeholder="选择出厂日期" style="width: 200px"></DatePicker>
                     </FormItem>
                 </Col>
                 
@@ -155,10 +155,10 @@ export default {
         },
         columns: [
             {title: 'ID',key: 'id'},
+            {title: '简介',key: 'title'},
             {title: '品牌',key: 'brand_name'},
             {title: '里程数',key: 'mileage'},
-            {title: '车型',key: 'car_type'},
-            {title: '生产日期',key: 'create_time'},
+            {title: '价格',key: 'price'},
             {title: '出厂日期',key: 'product_time'},
             {
                 title: '操作',
