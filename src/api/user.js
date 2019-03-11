@@ -148,3 +148,10 @@ export const logoutUser = () => {
     method: 'post',
   })
 }
+export const getWxInfo = (id) => {
+  return axios.request({
+    url: '/sys/user/wx',
+    method: 'get',
+    params:{user_id:id}
+  })
+}

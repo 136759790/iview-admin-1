@@ -143,6 +143,7 @@
 <script>
 import './index.less'
 import BaseUpload from '@/view/base/base_upload'
+import UserDetail from '@/view/backend/user_detail'
 import { getAllUser,isExist,addUser,deleteUser,getUser,updateUser } from '@/api/user'
 export default {
     components: {
@@ -237,6 +238,13 @@ export default {
             ]
         },
         columns: [
+            {type:'expand',width:50,render:(h,params)=>{
+                return h(UserDetail,{
+                    props:{
+                        row:params.row
+                    }
+                })
+            }},
             {title: '#',key: 'id'},
             {title: '昵称',key: 'nickname'},
             {title: '帐号',key: 'username'},
