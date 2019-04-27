@@ -40,7 +40,6 @@
 import { getAllUser,isExist,addUser,deleteUser,getUser,updateUser } from '@/api/user'
 import { listRole,updateRole,deleteRole,getRole,isCodeExsits,getResTree,addRoleRes,deleteRoleRes,addRoleUser,delRoleUser } from '@/api/role'
 export default {
-  name: 'LoginForm',
   props: {
     role_id: {
       type: Number,

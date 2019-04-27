@@ -3,35 +3,42 @@ import axios from '@/libs/api.request'
 
 export const getRess=(params)=>{
   return axios.request({
-    url: '/sys/ress',
+    url: '/res/ress',
     method: 'get',
     params:params
   })
 }
 export const getRes=(id)=>{
   return axios.request({
-    url: '/sys/res/'+id,
+    url: '/res/'+id,
     method: 'get',
   })
 }
 export const delRes=(id)=>{
   return axios.request({
-    url: '/sys/res/delete/'+id,
+    url: '/res/delete/'+id,
     method: 'get',
   })
 }
 export const addOrUpdateRes=(data)=>{
   return axios.request({
-    url: '/sys/res/add',
+    url: '/res/add',
     method: 'post',
     data:data
   })
 }
 export const resTree=(params)=>{
   return axios.request({
-    url: '/sys/res/tree/iview',
+    url: '/res/tree/iview',
     method: 'get',
     params:params
+  })
+}
+export const getResTree=(role_id)=>{
+  return axios.request({
+    url: 'res/tree',
+    method: 'get',
+    params:{role_id:role_id}
   })
 }
 

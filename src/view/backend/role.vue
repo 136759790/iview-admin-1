@@ -55,24 +55,7 @@
     <Drawer title="配置" v-model="drawer.config" width="100%" :mask-closable="true" >
         <Tabs value="resConfig">
             <TabPane label="配置资源" name="resConfig">
-                <Row>
-                    <Col span="11">
-                        <Card >
-                            <p slot="title">全部资源</p>
-                            <p>
-                                <Tree :data="dataAllRes" :render="renderAllContent" ></Tree>
-                            </p>
-                        </Card>
-                    </Col>
-                    <Col span="11" offset="1">
-                        <Card >
-                            <p slot="title">{{id.drawer.role_name}}的资源</p>
-                            <p>
-                                <Tree :data="dataMyRes" :render="renderMyContent" ></Tree>
-                            </p>
-                        </Card>
-                    </Col>
-                </Row>
+                <RoleConfigRes :role_id="id.drawer.role_id" :role="id.drawer"></RoleConfigRes>
             </TabPane>
             <TabPane label="配置用户" name="userConfig">
                 <RoleConfigUser :role_id="id.drawer.role_id"></RoleConfigUser>
@@ -89,16 +72,15 @@
 <script>
 import './index.less'
 import RoleConfigUser from '@/view/backend/role_config_user'
+import RoleConfigRes from '@/view/backend/role_config_res'
 import { getAllUser,isExist,addUser,deleteUser,getUser,updateUser } from '@/api/user'
-import { listRole,updateRole,deleteRole,getRole,isCodeExsits,getResTree,addRoleRes,deleteRoleRes } from '@/api/role'
+import { listRole,updateRole,deleteRole,getRole,isCodeExsits,getResTree } from '@/api/role'
 export default {
     components: {
-        RoleConfigUser  
+        RoleConfigUser,RoleConfigRes
     },
     data () {
     return {
-        dataMyRes: [],
-        dataAllRes: [],
         modal:{
             delete:false
         },
@@ -217,15 +199,6 @@ export default {
         this.id.drawer.role_id = params.row.id
         this.id.drawer.role_name = params.row.role_name
         this.drawer.config = true
-        this.handleInitRes(params.row.id)
-    },
-    handleInitRes(role_id){
-        getResTree(role_id).then(res => {
-            this.dataMyRes = res.data;
-        });
-        getResTree().then(res => {
-            this.dataAllRes = res.data;
-        });
     },
     handleAdd(){
         this.drawer.edit = true;
@@ -307,91 +280,7 @@ export default {
             }
         })
     },
-    renderAllContent (h, { root, node, data }) {
-                return h('span', {
-                    style: {
-                        display: 'inline-block',
-                        width: '100%'
-                    }
-                }, [
-                    h('span', [
-                        h('span', data.title)
-                    ]),
-                    h('span', {
-                        style: {
-                            display: 'inline-block',
-                            float: 'right',
-                            marginRight: '32px'
-                        }
-                    }, [
-                        h('Button', {
-                            props: Object.assign({}, this.buttonProps, {
-                                icon: 'md-add-circle',size:'small',type:'primary'
-                            }),
-                            on: {
-                                click: () => { 
-                                    // console.log(root,"1111",node,"1111",data);
-                                    let role_id=this.id.drawer.role_id;
-                                    let res_id = node.node.id;
-                                    addRoleRes(role_id,res_id).then(res => {
-                                        if(res.data.status == 1){
-                                             this.$Message.success(res.data.msg)
-                                             this.handleInitRes(role_id)
-                                        }else{
-                                             this.$Message.error(res.data.msg)
-                                        }
-                                    }).catch(e =>{
-                                        console.log(e);
-                                        this.$Message.error("操作失败，请联系管理员。")
-                                    });
-                                 }
-                            }
-                        })
-                    ])
-                ]);
-            },
-    renderMyContent (h, { root, node, data }) {
-                return h('span', {
-                    style: {
-                        display: 'inline-block',
-                        width: '100%'
-                    }
-                }, [
-                    h('span', [
-                        h('span', data.title)
-                    ]),
-                    h('span', {
-                        style: {
-                            display: 'inline-block',
-                            float: 'right',
-                            marginRight: '32px'
-                        }
-                    }, [
-                        h('Button', {
-                            props: Object.assign({}, this.buttonProps, {
-                                icon: 'ios-trash',size:'small',type:'error'
-                            }),
-                            on: {
-                                click: () => {
-                                    let role_id=this.id.drawer.role_id;
-                                    let res_id = node.node.id;
-                                    deleteRoleRes(role_id,res_id).then(res => {
-                                        if(res.data.status == 1){
-                                             this.$Message.success(res.data.msg)
-                                             this.handleInitRes(role_id)
-                                        }else{
-                                             this.$Message.error(res.data.msg)
-                                        }
-                                    }).catch(e =>{
-                                        console.log(e);
-                                        this.$Message.error("操作失败，请联系管理员。")
-                                    })
-                                }
-                            }
-                        })
-                    ])
-                ]);
-            },
+    
   },
   mounted () {
     this.handleGetRoles();

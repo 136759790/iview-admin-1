@@ -18,9 +18,7 @@
 <script>
 import LoginForm from '_c/login-form'
 import { mapActions } from 'vuex'
-import {
-  login1
-} from '@/api/user'
+import { login} from '@/api/user'
 export default {
   components: {
     LoginForm
@@ -31,18 +29,18 @@ export default {
       'getUserInfo'
     ]),
     handleSubmit ({ userName, password }) {
-      let loginForm = {
+      let data = {
         username:userName,
         password:password
       }
-      login1(loginForm).then(res => {
+      login(data).then(res => {
         if(res.data.status == 0){
           this.$Message.error(res.data.msg);
         }else if(res.data.status == 1){
-          console.log(this.$config.homeName)
           this.$router.push({
             name: this.$config.homeName
           })
+          console.log(this.$router)
         }
         console.log(res)
       }).catch(e => {
