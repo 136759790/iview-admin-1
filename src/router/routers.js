@@ -17,10 +17,10 @@ import parentView from '@/components/parent-view'
  * }
  */
 
-const componentMap={
-  main:Main,
-  login:() => import('@/view/login/login.vue'),
-  user:() => import('@/view/backend/user.vue')
+const componentMap = {
+  main: Main,
+  login: () => import('@/view/login/login.vue'),
+  user: () => import('@/view/backend/user.vue')
 
 }
 export default [
@@ -86,95 +86,125 @@ export default [
           title: '个人中心'
         },
         component: () => import('@/view/backend/self.vue')
-      },
-      
+      }
+
     ]
-},
-{
-  path: '/truck',
-  name: 'truck',
-  meta: {
-    icon: 'ios-jet-outline',
-    title: '卡车管理'
   },
-  component: Main,
-  children: [
-    {
-      path: 'info',
-      name: 'info',
-      meta: {
-        icon: 'ios-car',
-        title: '卡车信息'
-      },
-      component: () => import('@/view/truck/info.vue')
-    },
-    {
-      path: 'driver',
-      name: 'driver',
-      meta: {
-        icon: 'ios-contact-outline',
-        title: '司机信息'
-      },
-      component: () => import('@/view/backend/user.vue')
-    },
-    {
-      path: 'notice',
-      name: 'notice',
-      meta: {
-        icon: 'md-cog',
-        title: '顶部公告'
-      },
-      component: () => import('@/view/truck/notice.vue')
-    },
-    {
-      path: 'carousel',
-      name: 'carousel',
-      meta: {
-        icon: 'ios-code-working',
-        title: '首页轮播'
-      },
-      component: () => import('@/view/truck/carousel.vue')
-    },
-    {
-      path: 'news',
-      name: 'news',
-      meta: {
-        icon: 'md-aperture',
-        title: '新闻'
-      },
-      component: () => import('@/view/truck/news.vue')
-    },
-  ]
-},
   {
-  path: '/base',
-  name: 'base',
-  meta: {
-    icon: 'ios-construct-outline',
-    title: '基础配置'
+    path: '/repo',
+    name: 'repo',
+    meta: {
+      icon: 'md-contacts',
+      title: '仓储管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'purchasing',
+        name: 'purchasing',
+        meta: {
+          icon: 'ios-shirt',
+          title: '采购'
+        },
+        component: () => import('@/view/repo/purchasing.vue')
+      },
+      {
+        path: 'purchasing',
+        name: 'leave',
+        meta: {
+          icon: 'ios-shirt',
+          title: '请假'
+        },
+        component: () => import('@/view/repo/leave.vue')
+      }
+
+    ]
   },
-  component: Main,
-  children: [
-    {
-      path: 'select',
-      name: 'select',
-      meta: {
-        icon: 'ios-car',
-        title: '字典信息'
-      },
-      component: () => import('@/view/base/select.vue')
+  {
+    path: '/truck',
+    name: 'truck',
+    meta: {
+      icon: 'ios-jet-outline',
+      title: '卡车管理'
     },
-    {
-      path: 'upload',
-      name: 'upload',
-      meta: {
-        icon: 'ios-car',
-        title: '文件上传'
+    component: Main,
+    children: [
+      {
+        path: 'info',
+        name: 'info',
+        meta: {
+          icon: 'ios-car',
+          title: '卡车信息'
+        },
+        component: () => import('@/view/truck/info.vue')
       },
-      component: () => import('@/view/base/upload.vue')
+      {
+        path: 'driver',
+        name: 'driver',
+        meta: {
+          icon: 'ios-contact-outline',
+          title: '司机信息'
+        },
+        component: () => import('@/view/backend/user.vue')
+      },
+      {
+        path: 'notice',
+        name: 'notice',
+        meta: {
+          icon: 'md-cog',
+          title: '顶部公告'
+        },
+        component: () => import('@/view/truck/notice.vue')
+      },
+      {
+        path: 'carousel',
+        name: 'carousel',
+        meta: {
+          icon: 'ios-code-working',
+          title: '首页轮播'
+        },
+        component: () => import('@/view/truck/carousel.vue')
+      },
+      {
+        path: 'news',
+        name: 'news',
+        meta: {
+          icon: 'md-aperture',
+          title: '新闻'
+        },
+        component: () => import('@/view/truck/news.vue')
+      }
+    ]
+  },
+  {
+    path: '/base',
+    name: 'base',
+    meta: {
+      icon: 'ios-construct-outline',
+      title: '基础配置'
     },
-  ]
-},
+    component: Main,
+    children: [
+      {
+        path: 'select',
+        name: 'select',
+        meta: {
+          icon: 'ios-car',
+          title: '字典信息'
+        },
+        component: () => import('@/view/base/select.vue')
+      },
+      {
+        path: 'upload',
+        name: 'upload',
+        meta: {
+          icon: 'ios-car',
+          title: '文件上传'
+        },
+        component: () => import('@/view/base/upload.vue')
+      }
+    ]
+  },
   {
     path: '/',
     name: '_home',
