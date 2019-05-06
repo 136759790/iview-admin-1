@@ -47,7 +47,7 @@ export const getLabel=(code,value)=>{
     value:value
   }
   return axios.request({
-    url: '/select/getLabel',
+    url: '/select/label',
     method: 'get',
     params:params
   })

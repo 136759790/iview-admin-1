@@ -59,11 +59,11 @@
 <script>
 import './index.less'
 import BaseSelect from '@/view/base/base_select'
-import transelect from '@/view/base/tran_select'
+import TranSelect from '@/view/base/tran_select'
 import { saveLeave,getLeaves,deleteLeave,getLeave } from '@/api/oa/leave'
 export default {
   components: {
-    BaseSelect,transelect
+    BaseSelect,TranSelect
   },
   data () {
     return {
@@ -99,7 +99,7 @@ export default {
           title: '假期类型', 
           key: 'type',
           render: (h, params) => {
-            return h('transelect', {
+            return h(TranSelect, {
               props:{
                 code:'leave_type',
                 value:params.row.type
