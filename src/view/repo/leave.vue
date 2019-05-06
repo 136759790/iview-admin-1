@@ -4,7 +4,7 @@
         <div class="search-con search-con-top">
             <Input  clearable placeholder="输入关键字搜索" class="search-input" v-model="query.nickname"/>
             <Button @click="handleGetLeaves" class="search-btn" type="primary"><Icon type="search"/>搜索</Button>
-            <Button @click="drawer.edit = true" class="search-btn" type="success"><Icon type="search"/>新增</Button>
+            <Button @click="handleNewLeave" class="search-btn" type="success"><Icon type="search"/>新增</Button>
         </div>
         <Table size="small" :columns="columns" :data="data"></Table>
         <Page :total="page.total" :current="page.current" :page-size="page.pageSize" size="small"
@@ -218,6 +218,14 @@ export default {
     },
     handleEdit (params) {
       this.form.edit = params.row
+      this.drawer.edit = true
+    },
+    handleNewLeave(){
+      this.form.edit = {
+        type:0,
+        sampm:0,
+        eampm:1,
+      }
       this.drawer.edit = true
     }
   },
