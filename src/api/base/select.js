@@ -8,6 +8,13 @@ export const getSelects=(params)=>{
     params:params
   })
 }
+export const sortOption=(data)=>{
+  return axios.request({
+    url: '/select/option/sort',
+    method: 'post',
+    data:data
+  })
+}
 export const getSelect=(id)=>{
   return axios.request({
     url: '/select/'+id,
@@ -47,7 +54,7 @@ export const getLabel=(code,value)=>{
     value:value
   }
   return axios.request({
-    url: '/select/getLabel',
+    url: '/select/label',
     method: 'get',
     params:params
   })

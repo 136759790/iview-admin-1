@@ -23,7 +23,7 @@ export default {
       }
   },
   mounted () {
-      this.handlegetSelect()
+      this.handleGetLabel(this.code,this.value)
   }
 }
 </script>

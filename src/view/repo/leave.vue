@@ -27,16 +27,26 @@
                 </Col>
             </Row>
             <Row :gutter="32">
-                <Col span="24">
-                    <FormItem label="开始时间：" prop="stime" label-position="left">
-                        <DatePicker type="datetime" placeholder="请选择开始时间" v-model="form.edit.stime" ></DatePicker>
+                <Col span="12">
+                    <FormItem label="开始日期：" prop="stime" label-position="left">
+                        <DatePicker type="date" placeholder="请选择开始时间" v-model="form.edit.stime" ></DatePicker>
+                    </FormItem>
+                </Col>
+                <Col span="12">
+                    <FormItem label="开始时间：" prop="sampm" label-position="left">
+                        <BaseSelect code="ampm" :value.sync="form.edit.sampm" placeholder="请选择开始时间" style="width:200px"/>
                     </FormItem>
                 </Col>
             </Row>
             <Row :gutter="32">
-                  <Col span="24">
-                    <FormItem label="结束时间：" prop="etime" label-position="left">
-                        <DatePicker type="datetime" placeholder="请输入结束时间" v-model="form.edit.etime" ></DatePicker>
+                  <Col span="12">
+                    <FormItem label="结束日期：" prop="etime" label-position="left">
+                        <DatePicker type="date" placeholder="请输入结束时间" v-model="form.edit.etime" ></DatePicker>
+                    </FormItem>
+                </Col>
+                <Col span="12">
+                    <FormItem label="结束时间：" prop="eampm" label-position="left">
+                        <BaseSelect code="ampm" :value.sync="form.edit.eampm" placeholder="请选择结束时间" style="width:200px"/>
                     </FormItem>
                 </Col>
             </Row>
@@ -74,7 +84,10 @@ export default {
         edit: false,
       },
       form: {
-        edit: {},
+        edit: {
+          sampm:'0',
+          eampm:'1'
+        },
       },
       rules: {
         edit: {
@@ -99,7 +112,7 @@ export default {
           title: '假期类型', 
           key: 'type',
           render: (h, params) => {
-            return h('transelect', {
+            return h(transelect, {
               props:{
                 code:'leave_type',
                 value:params.row.type
