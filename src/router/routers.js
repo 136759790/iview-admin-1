@@ -109,7 +109,7 @@ export default [
         component: () => import('@/view/repo/purchasing.vue')
       },
       {
-        path: 'purchasing',
+        path: 'leave',
         name: 'leave',
         meta: {
           icon: 'ios-shirt',

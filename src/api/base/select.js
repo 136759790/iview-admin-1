@@ -41,6 +41,17 @@ export const getOption=(id)=>{
     method: 'get',
   })
 }
+export const getLabel=(code,value)=>{
+  let params = {
+    code:code,
+    value:value
+  }
+  return axios.request({
+    url: '/select/getLabel',
+    method: 'get',
+    params:params
+  })
+}
 export const getOptionTree=(code)=>{
   return axios.request({
     url: '/select/option/tree',
