@@ -70,6 +70,7 @@
 import './index.less'
 import BaseSelect from '@/view/base/base_select'
 import transelect from '@/view/base/tran_select'
+import LeaveExpand from '@/view/repo/leaveExpand'
 import { saveLeave,getLeaves,deleteLeave,getLeave } from '@/api/oa/leave'
 export default {
   components: {
@@ -101,7 +102,7 @@ export default {
         {type: 'expand',
           width: 50,
           render: (h, params) => {
-            return h(UserDetail, {
+            return h(LeaveExpand, {
               props: {
                 row: params.row
               }
@@ -116,6 +117,18 @@ export default {
               props:{
                 code:'leave_type',
                 value:params.row.type
+              }
+            })
+          }
+        },
+        { 
+          title: '流程状态', 
+          key: 'status',
+          render: (h, params) => {
+            return h(transelect, {
+              props:{
+                code:'leave_status',
+                value:params.row.status
               }
             })
           }
