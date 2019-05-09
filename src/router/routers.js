@@ -99,6 +99,15 @@ export default [
     },
     component: Main,
     children: [
+      // {
+      //   path: 'ApprovalPending',
+      //   name: 'ApprovalPending',
+      //   meta: {
+      //     icon: 'ios-shirt',
+      //     title: '待审批'
+      //   },
+      //   component: () => import('@/view/repo/approvalPending.vue')
+      // },
       {
         path: 'purchasing',
         name: 'purchasing',
