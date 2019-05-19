@@ -20,6 +20,12 @@ const turnTo = (to, access, next) => {
 }
 
 router.beforeEach((to, from, next) => {
+  // let ress = router.app.$store.state.user.access;
+  // if(ress && ress !='' && ress.indexOf(to.name) == -1 && to.name != LOGIN_PAGE_NAME && to.name != 'home'){
+  //   router.app.$Message.error('你没有访问'+to.meta.title+'的权限。');
+  //   return
+  // }
+
   iView.LoadingBar.start()
   if(to.name === LOGIN_PAGE_NAME){//登录页面不拦截
     isLogin().then(res=>{

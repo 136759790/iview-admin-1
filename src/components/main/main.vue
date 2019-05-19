@@ -46,6 +46,8 @@ import { getNewTagList, getNextRoute, routeEqual } from '@/libs/util'
 import routers from '@/router/routers'
 import minLogo from '@/assets/images/logo-min.jpg'
 import maxLogo from '@/assets/images/logo.png'
+import {getUserVo} from '@/api/user'
+
 import './main.less'
 export default {
   name: 'Main',
@@ -176,6 +178,14 @@ export default {
     }
     // 获取未读消息条数
     this.getUnreadMessageCount()
+  },
+  created(){
+    getUserVo().then(res=>{
+      if(res.data.status == 1){
+          let array = res.data.data.ress;
+          this.$store.commit('setAccess',array)
+      }
+    })
   }
 }
 </script>

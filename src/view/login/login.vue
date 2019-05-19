@@ -37,14 +37,13 @@ export default {
         if(res.data.status == 0){
           this.$Message.error(res.data.msg);
         }else if(res.data.status == 1){
+          // let array = res.data.data.ress;
+          // this.$store.commit('setAccess',array)
           this.$router.push({
             name: this.$config.homeName
           })
-          console.log(this.$router)
         }
-        console.log(res)
       }).catch(e => {
-        console.log(e)
       })
       // this.handleLogin({ userName, password }).then(res => {
       //   console.log(1111,res);

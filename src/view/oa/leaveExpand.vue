@@ -49,7 +49,7 @@
 import './index.less'
 import BaseSelect from '@/view/base/base_select'
 import transelect from '@/view/base/tran_select'
-import { saveLeave,getLeaves,deleteLeave,getLeave } from '@/api/oa/leave'
+import { saveLeave,getLeaves,deleteLeave,getLeave,submitLeave } from '@/api/oa/leave'
 export default {
   components: {
     BaseSelect,transelect
@@ -59,7 +59,11 @@ export default {
   },
   methods:{
       handleSubmit(){
-          
+          submitLeave(this.row.id).then(res =>{
+              if(res.data.status == 1){
+                  console.log(res);
+              }
+          })
       }
   }
 }

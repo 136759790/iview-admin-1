@@ -25,3 +25,10 @@ export const getLeave=(id)=>{
     method: 'get',
   })
 }
+export const submitLeave=(id)=>{
+  return axios.request({
+    url: '/oa/leave/submit',
+    method: 'post',
+    params:{id:id}
+  })
+}

@@ -70,8 +70,8 @@
 import './index.less'
 import BaseSelect from '@/view/base/base_select'
 import transelect from '@/view/base/tran_select'
-import LeaveExpand from '@/view/repo/leaveExpand'
-import { saveLeave,getLeaves,deleteLeave,getLeave } from '@/api/oa/leave'
+import LeaveExpand from '@/view/oa/leaveExpand'
+import { saveLeave,getLeaves,deleteLeave,getLeave,submitLeave } from '@/api/oa/leave'
 export default {
   components: {
     BaseSelect,transelect
