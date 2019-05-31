@@ -152,50 +152,6 @@ export default {
                 }
             }
         ],
-        columns_option: [
-            {title: 'ID',key: 'id'},
-            {title: '值',key: 'value'},
-            {title: '显示',key: 'name'},
-            {title: '所属字典',key: 'select_code'},
-            {
-                title: '操作',
-                key: 'status',
-                width: 200,
-                align: 'center',
-                render: (h, params) => {
-                    return h('div', [
-                        h('Button', {
-                            props: {
-                                type: 'error',
-                                size: 'small'
-                            },
-                            style:{
-                                marginRight: '5px'
-                            },
-                            on: {
-                                click: () => {
-                                    this.handleDelete(params)
-                                }
-                            }
-                        }, '删除'),
-                        h('Button', {
-                            props: {
-                                type: 'info',
-                                size: 'small'
-                            },
-                            style:{
-                                marginRight: '5px'
-                            },
-                            on: {
-                                click: () => {
-                                    this.handleEdit(params)
-                                }
-                            }
-                        }, '编辑'),
-                    ]);
-                }
-            }
-        ],
         data: [],
         data_tree: [],
         query:{

@@ -229,6 +229,8 @@ export default {
                         this.handleGetRess();
                         this.$refs[name].resetFields();
                         this.drawer.edit=false
+                    }else{
+                        this.$Message.error(res.data.msg);
                     }
                 }).catch(e=>{
                     console.log(e);

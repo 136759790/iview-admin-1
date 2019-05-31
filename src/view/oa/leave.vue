@@ -4,7 +4,7 @@
         <div class="search-con search-con-top">
             <Input  clearable placeholder="输入关键字搜索" class="search-input" v-model="query.nickname"/>
             <Button @click="handleGetLeaves" class="search-btn" type="primary"><Icon type="search"/>搜索</Button>
-            <Button @click="drawer.edit = true" class="search-btn" type="success"><Icon type="search"/>新增</Button>
+            <Button @click="handleNewLeave" class="search-btn" type="success"><Icon type="search"/>新增</Button>
         </div>
         <Table size="small" :columns="columns" :data="data"></Table>
         <Page :total="page.total" :current="page.current" :page-size="page.pageSize" size="small"
@@ -27,16 +27,26 @@
                 </Col>
             </Row>
             <Row :gutter="32">
-                <Col span="24">
-                    <FormItem label="开始时间：" prop="stime" label-position="left">
-                        <DatePicker type="datetime" placeholder="请选择开始时间" v-model="form.edit.stime" ></DatePicker>
+                <Col span="12">
+                    <FormItem label="开始日期：" prop="stime" label-position="left">
+                        <DatePicker type="date" placeholder="请选择开始时间" v-model="form.edit.stime" ></DatePicker>
+                    </FormItem>
+                </Col>
+                <Col span="12">
+                    <FormItem label="开始时间：" prop="sampm" label-position="left">
+                        <BaseSelect code="ampm" :value.sync="form.edit.sampm" placeholder="请选择开始时间" style="width:200px"/>
                     </FormItem>
                 </Col>
             </Row>
             <Row :gutter="32">
-                  <Col span="24">
-                    <FormItem label="结束时间：" prop="etime" label-position="left">
-                        <DatePicker type="datetime" placeholder="请输入结束时间" v-model="form.edit.etime" ></DatePicker>
+                  <Col span="12">
+                    <FormItem label="结束日期：" prop="etime" label-position="left">
+                        <DatePicker type="date" placeholder="请输入结束时间" v-model="form.edit.etime" ></DatePicker>
+                    </FormItem>
+                </Col>
+                <Col span="12">
+                    <FormItem label="结束时间：" prop="eampm" label-position="left">
+                        <BaseSelect code="ampm" :value.sync="form.edit.eampm" placeholder="请选择结束时间" style="width:200px"/>
                     </FormItem>
                 </Col>
             </Row>
@@ -59,8 +69,9 @@
 <script>
 import './index.less'
 import BaseSelect from '@/view/base/base_select'
-import TranSelect from '@/view/base/tran_select'
-import { saveLeave,getLeaves,deleteLeave,getLeave } from '@/api/oa/leave'
+import transelect from '@/view/base/tran_select'
+import LeaveExpand from '@/view/oa/leaveExpand'
+import { saveLeave,getLeaves,deleteLeave,getLeave,submitLeave } from '@/api/oa/leave'
 export default {
   components: {
     BaseSelect,TranSelect
@@ -74,7 +85,10 @@ export default {
         edit: false,
       },
       form: {
-        edit: {},
+        edit: {
+          sampm:'0',
+          eampm:'1'
+        },
       },
       rules: {
         edit: {
@@ -88,7 +102,7 @@ export default {
         {type: 'expand',
           width: 50,
           render: (h, params) => {
-            return h(UserDetail, {
+            return h(LeaveExpand, {
               props: {
                 row: params.row
               }
@@ -99,10 +113,22 @@ export default {
           title: '假期类型', 
           key: 'type',
           render: (h, params) => {
-            return h(TranSelect, {
+            return h(transelect, {
               props:{
                 code:'leave_type',
                 value:params.row.type
+              }
+            })
+          }
+        },
+        { 
+          title: '流程状态', 
+          key: 'status',
+          render: (h, params) => {
+            return h(transelect, {
+              props:{
+                code:'leave_status',
+                value:params.row.status
               }
             })
           }
@@ -205,6 +231,14 @@ export default {
     },
     handleEdit (params) {
       this.form.edit = params.row
+      this.drawer.edit = true
+    },
+    handleNewLeave(){
+      this.form.edit = {
+        type:0,
+        sampm:0,
+        eampm:1,
+      }
       this.drawer.edit = true
     }
   },

@@ -17,10 +17,16 @@ import parentView from '@/components/parent-view'
  * }
  */
 
+import LoginVue from '@/view/login/login.vue'//登录页面
+import userVue from '@/view/backend/user.vue'//用户管理
+import roleVue from '@/view/backend/role.vue'//角色管理
+import resVue from '@/view/backend/res.vue'//资源管理
+import orgVue from '@/view/backend/org.vue'//组织管理
+import selfVue from '@/view/backend/self.vue'//个人信息
 const componentMap = {
   main: Main,
-  login: () => import('@/view/login/login.vue'),
-  user: () => import('@/view/backend/user.vue')
+  login:  LoginVue,
+  user:  userVue
 
 }
 export default [
@@ -31,20 +37,20 @@ export default [
       title: 'Login - 登录',
       hideInMenu: true
     },
-    component: () => import('@/view/login/login.vue')
+    component: LoginVue
   },
   {
     path: '/backend',
     name: 'backend',
     meta: {
       icon: 'md-contacts',
-      title: '后台管理'
+      title: '后台管理',
     },
     component: Main,
     children: [
       {
         path: 'user',
-        name: 'user',
+        name: 'backend_user',
         meta: {
           icon: 'ios-contacts',
           title: '用户管理'
@@ -53,69 +59,87 @@ export default [
       },
       {
         path: 'role',
-        name: 'role',
+        name: 'backend_role',
         meta: {
           icon: 'ios-ribbon',
           title: '角色管理'
         },
-        component: () => import('@/view/backend/role.vue')
+        component: roleVue
       },
       {
         path: 'res',
-        name: 'res',
+        name: 'backend_res',
         meta: {
           icon: 'md-restaurant',
           title: '资源管理'
         },
-        component: () => import('@/view/backend/res.vue')
+        component: resVue
       },
       {
         path: 'org',
-        name: 'org',
+        name: 'backend_org',
         meta: {
           icon: 'ios-git-network',
           title: '组织管理'
         },
-        component: () => import('@/view/backend/org.vue')
+        component: orgVue
       },
       {
         path: 'self',
-        name: 'self',
+        name: 'backend_self',
         meta: {
           icon: 'ios-shirt',
           title: '个人中心'
         },
-        component: () => import('@/view/backend/self.vue')
+        component: selfVue
       }
 
     ]
   },
   {
-    path: '/repo',
-    name: 'repo',
+    path: '/oa',
+    name: 'oa',
     meta: {
       icon: 'md-contacts',
-      title: '仓储管理'
+      title: 'OA系统'
     },
     component: Main,
     children: [
+      // {
+      //   path: 'ApprovalPending',
+      //   name: 'ApprovalPending',
+      //   meta: {
+      //     icon: 'ios-shirt',
+      //     title: '待审批'
+      //   },
+      //   component: () => import('@/view/repo/approvalPending.vue')
+      // },
       {
         path: 'purchasing',
-        name: 'purchasing',
+        name: 'oa_purchasing',
         meta: {
           icon: 'ios-shirt',
           title: '采购'
         },
-        component: () => import('@/view/repo/purchasing.vue')
+        component: () => import('@/view/oa/purchasing.vue')
       },
       {
         path: 'leave',
-        name: 'leave',
+        name: 'oa_leave',
         meta: {
           icon: 'ios-shirt',
           title: '请假'
         },
-        component: () => import('@/view/repo/leave.vue')
+        component: () => import('@/view/oa/leave.vue')
+      },
+      {
+        path: 'flow',
+        name: 'oa_flow',
+        meta: {
+          icon: 'ios-shirt',
+          title: '工作流'
+        },
+        component: () => import('@/view/oa/flow.vue')
       }
 
     ]
@@ -131,7 +155,7 @@ export default [
     children: [
       {
         path: 'info',
-        name: 'info',
+        name: 'truck_info',
         meta: {
           icon: 'ios-car',
           title: '卡车信息'
@@ -140,7 +164,7 @@ export default [
       },
       {
         path: 'driver',
-        name: 'driver',
+        name: 'truck_driver',
         meta: {
           icon: 'ios-contact-outline',
           title: '司机信息'
@@ -149,7 +173,7 @@ export default [
       },
       {
         path: 'notice',
-        name: 'notice',
+        name: 'truck_notice',
         meta: {
           icon: 'md-cog',
           title: '顶部公告'
@@ -158,7 +182,7 @@ export default [
       },
       {
         path: 'carousel',
-        name: 'carousel',
+        name: 'truck_carousel',
         meta: {
           icon: 'ios-code-working',
           title: '首页轮播'
@@ -167,7 +191,7 @@ export default [
       },
       {
         path: 'news',
-        name: 'news',
+        name: 'truck_news',
         meta: {
           icon: 'md-aperture',
           title: '新闻'
@@ -187,7 +211,7 @@ export default [
     children: [
       {
         path: 'select',
-        name: 'select',
+        name: 'base_select',
         meta: {
           icon: 'ios-car',
           title: '字典信息'
@@ -196,7 +220,7 @@ export default [
       },
       {
         path: 'upload',
-        name: 'upload',
+        name: 'base_upload',
         meta: {
           icon: 'ios-car',
           title: '文件上传'

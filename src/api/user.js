@@ -144,3 +144,9 @@ export const getWxInfo = (id) => {
     params:{user_id:id}
   })
 }
+export const getUserVo = () => {
+  return axios.request({
+    url: '/user/vo',
+    method: 'get',
+  })
+}

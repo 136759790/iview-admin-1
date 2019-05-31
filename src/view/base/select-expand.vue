@@ -40,7 +40,7 @@
 <script>
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import Treeselect from '@riophae/vue-treeselect'
-import { getOptions,getOption,delOption,saveOption,getOptionTreeSelect } from '@/api/base/select'
+import { getOptions,getOption,delOption,saveOption,getOptionTreeSelect,sortOption } from '@/api/base/select'
 export default {
     props:{
         row:Object
@@ -108,6 +108,32 @@ export default {
                                 }
                             }
                         }, '编辑'),
+                        h('ButtonGroup', [
+                            h('Button', {
+                                props: {
+                                    type: 'default',
+                                    size: 'small',
+                                    icon:"md-arrow-up"
+                                },
+                                on: {
+                                    click: () => {
+                                        this.handleOrder(params,0)
+                                    }
+                                }
+                            },),//<Icon type="md-arrow-down" />
+                            h('Button', {
+                                props: {
+                                    type: 'default',
+                                    size: 'small',
+                                    icon:"md-arrow-down"
+                                },
+                                on: {
+                                    click: () => {
+                                       this.handleOrder(params,1)
+                                    }
+                                }
+                            }),
+                        ]),
                     ]);
                 }
             }
@@ -125,6 +151,16 @@ export default {
     }
   },
   methods: {
+    handleOrder(params,type){//0上，1下
+        let data={
+            arrow:type,
+            id:params.row.id,
+            code:params.row.select_code
+        }
+        sortOption(data).then(res => {
+            this.handleGetOptions(params.row.select_code)
+        })
+    },
     handleNewOption(){
         this.form.edit={};
         this.modal.edit = true
