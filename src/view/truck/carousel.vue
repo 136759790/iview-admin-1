@@ -10,7 +10,7 @@
         <Page :total="page.total" :current="page.current" :page-size="page.pageSize" size="small" 
         show-total style="margin: 10px 0" @on-change="handleChangePage" />
     </Card>
-    <Drawer title="编辑信息" v-model="drawer.edit" width="720" :mask-closable="true" >
+    <Drawer title="编辑信息" v-model="drawer.edit" width="720" :mask-closable="false" >
         <Form ref="form.edit" :model="form.edit" :rules="rules.edit">
             <Row :gutter="32">
                 <Col span="12">
@@ -42,7 +42,7 @@
             <Row :gutter="32">
                 <Col span="24">
                     <FormItem label="轮播图片：" prop="pic" label-position="top">
-                       <BaseUpload :upid.sync="form.edit.up_id" />
+                       <BaseUpload multiple refType="3" :upid="form.edit.up_id" />
                     </FormItem>
                 </Col>
             </Row>
@@ -68,6 +68,7 @@
 <script>
 import './index.less'
 import { getCarousels,getCarousel,saveCarousel,delCarousel } from '@/api/truck/carousel'
+import { getUpload,getUploadIdsByRef,getRefId} from '@/api/base/upload'
 import BaseUpload from '@/view/base/base_upload'
 import config from '@/config'
 const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
@@ -182,14 +183,19 @@ export default {
         this.handleGetCarousels();
     },
     handleNewCarousel(){
-        this.drawer.edit = true
-        this.form.edit={
-            title:'',
-            url:'',
-            description:'',
-            valid:'1',
-            order:1,
-        }
+        getRefId(3).then(res => {
+            if(res.data.status == 1){
+                this.drawer.edit = true
+                this.form.edit={
+                    title:'',
+                    url:'',
+                    description:'',
+                    valid:'1',
+                    order:1,
+                    up_id:res.data.data.id
+                }
+            }
+        })
     },
     handleSubmit (name) {
         console.log(this.form.edit)
@@ -217,9 +223,9 @@ export default {
     handleGetCarousels(){
         getCarousels(this.query).then((res)=>{
             this.data = res.data.data.rows;
-            this.page.current=res.data.pageNum
-            this.page.total=res.data.total
-            this.page.pageSize=res.data.pageSize
+            this.page.current=res.data.data.pageNum
+            this.page.total=res.data.data.total
+            this.page.pageSize=res.data.data.pageSize
         });
     },
     handleDelete (params) {
@@ -248,19 +254,12 @@ export default {
                 console.log(res);
                 this.form.edit = res.data.data
                 this.drawer.edit = true;
-                let path =baseUrl+"/upload/file/"+res.data.data.up_id
-                this.defaultList=[
-                    {
-                        name:'轮播图',
-                        url:path,
-                    }
-                ]
+                this.form.edit.valid = res.data.data.valid+""
             }
         })
     },
     handleView (params) {
-         let uid = params.row.up_id;
-         this.url.view = baseUrl+"/upload/file/"+uid;
+        this.url.view = baseUrl+"/upload/file/"+params.row.pic_id;
         this.modal.view =true
     }
   },
