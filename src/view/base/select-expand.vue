@@ -166,7 +166,7 @@ export default {
         this.modal.edit = true
     },
     handleGetOptionTree(code){
-        getOptionTree(code).then(res => {
+        getOptionTreeSelect(code).then(res => {
             if(res.data.status == 1){
                 this.options = res.data.data
             }
@@ -233,7 +233,7 @@ export default {
   },
   mounted () {
       this.handleGetOptions(this.row.code)
-    //   this.handleGetOptionTreeSelect(this.row.code);
+      this.handleGetOptionTree(this.row.code);
   }
 }
 </script>
