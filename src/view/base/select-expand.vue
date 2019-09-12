@@ -40,7 +40,7 @@
 <script>
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import Treeselect from '@riophae/vue-treeselect'
-import { getOptions,getOption,delOption,saveOption,getOptionTreeSelect,sortOption } from '@/api/base/select'
+import { getOptionsMobile,getOptions,getOption,delOption,saveOption,getOptionTreeSelect,sortOption } from '@/api/base/select'
 export default {
     props:{
         row:Object
@@ -166,7 +166,7 @@ export default {
         this.modal.edit = true
     },
     handleGetOptionTree(code){
-        getOptionTreeSelect(code).then(res => {
+        getOptionsMobile(code).then(res => {
             if(res.data.status == 1){
                 this.options = res.data.data
             }

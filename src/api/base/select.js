@@ -66,6 +66,13 @@ export const getOptionTree=(code)=>{
     params:{code:code}
   })
 }
+export const getOptionsMobile=(code)=>{
+  return axios.request({
+    url: '/select/option/trees',
+    method: 'get',
+    params:{code:code}
+  })
+}
 export const getOptionTreeSelect=(code)=>{
   return axios.request({
     url: '/select/option/tree/select',
