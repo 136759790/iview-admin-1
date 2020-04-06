@@ -105,15 +105,6 @@ export default [
     },
     component: Main,
     children: [
-      // {
-      //   path: 'ApprovalPending',
-      //   name: 'ApprovalPending',
-      //   meta: {
-      //     icon: 'ios-shirt',
-      //     title: '待审批'
-      //   },
-      //   component: () => import('@/view/repo/approvalPending.vue')
-      // },
       {
         path: 'purchasing',
         name: 'oa_purchasing',
@@ -142,6 +133,26 @@ export default [
         component: () => import('@/view/oa/flow.vue')
       }
 
+    ]
+  },
+  {
+    path: '/mp',
+    name: 'mp',
+    meta: {
+      icon: 'md-contacts',
+      title: '小程序'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'mp_menu_shop',
+        name: 'mp_menu_shop',
+        meta: {
+          icon: 'ios-shirt',
+          title: '商店管理'
+        },
+        component: () => import('@/view/mp/menu/shop.vue')
+      }
     ]
   },
   {

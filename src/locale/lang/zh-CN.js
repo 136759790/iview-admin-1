@@ -25,6 +25,9 @@ export default {
   oa_leave: '请假管理',
   oa_flow: '工作流管理',
 
+  mp:'小程序',
+  mp_menu_shop:'商店管理',
+
   components: '组件',
   count_to_page: '数字渐变',
   tables_page: '多功能表格',
