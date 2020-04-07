@@ -15,7 +15,7 @@
             <Row :gutter="32">
                 <Col span="12">
                     <FormItem label="名称：" prop="title" label-position="left">
-                        <Input   v-model="form.edit.title" placeholder="请输入卡车出售简介" />
+                        <Input   v-model="form.edit.title" placeholder="请输入卡车名称" />
                     </FormItem>
                 </Col>
                 <Col span="12">
@@ -28,12 +28,12 @@
             <Row :gutter="32">
                 <Col span="12">
                     <FormItem label="品牌：" prop="brand" label-position="left">
-                        <BaseSelect code="truck_brand" :value.sync="form.edit.brand" />
+                        <treeselect v-model="form.edit.brand" placeholder="请选择卡车品牌"  :options="options" />
                     </FormItem>
                 </Col>
                 <Col span="12">
                     <FormItem label="里程数：" prop="mileage" label-position="top">
-                        <Input   v-model="form.edit.mileage" placeholder="请输入里程数" />
+                        <Input   v-model="form.edit.mileage" placeholder="请输入里程数（万公里）" />
                     </FormItem>
                 </Col>
             </Row>
@@ -116,12 +116,14 @@ import BaseSelect from '@/view/base/base_select'
 import BaseUpload from '@/view/base/base_upload'
 import BaseMap from '@/view/base/base_map'
 import { getTrucks,saveTruck,getTruck,delTruck } from '@/api/truck/info'
-import { getOptions } from '@/api/base/select'
+import { getOptions,getOptionsMobile } from '@/api/base/select'
 import { getUpload,getUploadIdsByRef,getRefId} from '@/api/base/upload'
 import { getMyParks,saveCoordinate} from '@/api/truck/coordinate'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import Treeselect from '@riophae/vue-treeselect'
 export default {
     components: {
-        BaseSelect,BaseUpload,BaseMap
+        BaseSelect,BaseUpload,BaseMap,Treeselect
     },
     data () {
     return {
@@ -218,6 +220,13 @@ export default {
               }
           });
       },
+      handleGetOptionTree(code){
+        getOptionsMobile(code).then(res => {
+            if(res.data.status == 1){
+                this.options = res.data.data
+            }
+        });
+    },
       handleOkPostion(){
           if(this.saveAsCommon){
               if(!this.position_name){
@@ -363,6 +372,7 @@ export default {
   },
   mounted () {
     this.handleGetTrucks();
+    this.handleGetOptionTree('truck_brand');
     // this.handleGetBrand();
   }
 }
