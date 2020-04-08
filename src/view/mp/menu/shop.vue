@@ -2,16 +2,15 @@
     <div>
       <Card>
           <div class="search-con search-con-top">
-              <Input  clearable placeholder="输入代码搜索" class="search-input" v-model="query.code"/>
-              <Input  clearable placeholder="输入名称搜索" class="search-input" v-model="query.name"/>
-              <Button @click="handleGetSelects" class="search-btn" type="primary">搜索</Button>
+              <Input  clearable placeholder="输入名称搜索" class="search-input" v-model="params.name"/>
+              <Button @click="handlePage" class="search-btn" type="primary">搜索</Button>
               <Button @click="handleNewShop" class="search-btn" type="success">新增</Button>
           </div>
           <Table size="small" stripe  :columns="columns" :data="data"></Table>
           <Page :total="page.total" :current="page.current" :page-size="page.pageSize" size="small" 
           show-total style="margin: 10px 0" @on-change="handleChangePage" />
       </Card>
-      <Drawer title="编辑字典" v-model="drawer.edit" width="720" :mask-closable="true" >
+      <Drawer title="编辑商店" v-model="drawer.edit" width="720" :mask-closable="true" >
           <Form ref="form.edit" :model="form.edit" :rules="rules.edit">
               <Row :gutter="32">
                   <Col span="24">
@@ -55,24 +54,12 @@
               <Button type="primary" @click="handleSubmit('form.edit')">提交</Button>
           </div>
       </Drawer>
-      <Drawer title="配置字典" v-model="drawer.manage" width="720" :mask-closable="true" >
-          <Card>
-              <p slot="title">
-                  {{this.select_name}}-键值树
-              </p>
-              <Tree :data="data_tree" :render="renderContent"></Tree>
-          </Card>
-          <div style="margin-left:40%;margin-top:10%">
-              <Button style="margin-right: 8px" @click="drawer.manage=false">取消</Button>
-              <Button type="primary" @click="handleSubmit('form.edit')">提交</Button>
-          </div>
-      </Drawer>
     </div>
   </template>
   
   <script>
   import './index.less'
-  import { getSelects,getSelect,delSelect,saveSelect,getOptionTree } from '@/api/base/select'
+  import { save,del,page,one } from '@/api/mp/shop'
   import { getAllUser} from '@/api/user'
   import expandRow from './shop-expand.vue';
   export default {
@@ -82,19 +69,12 @@
     data () {
       return {
           loading : false,
-          options:[
-              {
-                  "value":'123',
-                  "label":"123"
-              }
-          ],
+          options:[],
           modal:{
               delete:false,
-              tree:false
           },
           drawer:{
               edit:false,
-              manage:false,
           },
           form:{
               edit:{
@@ -105,7 +85,6 @@
           },
           rules:{
               edit:{
-                  code:[{required:true,message:'代码不能为空',trigger:'blur'}],
                   name:[{required:true,message:'名称不能为空',trigger:'blur'}],
               },
           },
@@ -122,9 +101,8 @@
                   }
               },
               {title: 'ID',key: 'id'},
-              {title: '代码',key: 'code'},
-              {title: '名称',key: 'name'},
-              {title: '描述',key: 'desc'},
+              {title: '商店名称',key: 'name'},
+              {title: '店内公告',key: 'notice'},
               {
                   title: '操作',
                   key: 'status',
@@ -159,25 +137,14 @@
                                       this.handleEdit(params)
                                   }
                               }
-                          }, '编辑'),
-                          h('Button', {
-                              props: {
-                                  type: 'success',
-                                  size: 'small'
-                              },
-                              on: {
-                                  click: () => {
-                                      this.handleManage(params)
-                                  }
-                              }
-                          }, '级联'),
+                          }, '编辑')
                       ]);
                   }
               }
           ],
           data: [],
           data_tree: [],
-          query:{
+          params:{
               code:'',
               name:''
           },
@@ -200,17 +167,12 @@
             if(name != ''){
                 this.loading = true;
                 getAllUser({username:name}).then(res =>{
-                    if(res.data.status == 1){
-                        let rows = res.data.data.rows;
-                        this.options=[];
-                        debugger
-                        rows.forEach(e => {
-                            this.options.push({
-                                "label":e.username,
-                                "value":e.id
-                            })
-                        });
-                    }
+                    res.data.list.forEach(e => {
+                        this.options.push({
+                            "label":e.username,
+                            "value":e.id
+                        })
+                    });
                 });
                 this.loading = false
             }else{
@@ -221,45 +183,32 @@
           this.form.edit={};
           this.drawer.edit = true
       },
-      handleManage(params){
-          this.select_id = params.row.id;
-          this.select_name = params.row.name;
-          getOptionTree(params.row.code).then(res => {
-              if(res.data.status == 1){
-                  this.data_tree = res.data.data
-                  this.drawer.manage = true
-              }
-          });
-      },
       handleChangePage(page){
-          this.query.page = page;
-          this.handleGetSelects();
+          this.params.page = page;
+      },
+      handlePage(){
+        page(this.params).then(res =>{
+            this.data = res.data.list
+        })
       },
       handleSubmit (name) {
+          let data = this.form.edit
           this.$refs[name].validate((valid) => {
               if (valid) {
-                  saveSelect(this.form.edit).then(res=>{
-                      if(res.data.status == 1){
-                          this.$Message.success(res.data.msg);
-                          this.handleGetSelects();
-                          this.$refs[name].resetFields();
-                          this.drawer.edit=false
-                      }
-                  }).catch(e=>{
-                      console.log(e);
-                  });
+                  save(data).then(res=>{
+                      this.data = res.data.list
+                      this.page.current=res.data.pageNum
+                      this.page.total=res.data.total
+                      this.page.pageSize=res.data.pageSize
+                      this.$Message.success(res.msg);
+                      this.$refs[name].resetFields();
+                      this.drawer.edit=false
+                      this.handlePage()
+                  })
               } else {
                   this.$Message.error('请按照格式填写表单!');
               }
           })
-      },
-      handleGetSelects(){
-          getSelects(this.query).then((res)=>{
-              this.data = res.data.data.rows;
-              this.page.current=res.data.data.pageNum
-              this.page.total=res.data.data.total
-              this.page.pageSize=res.data.data.pageSize
-          });
       },
       handleDelete (params) {
           let config={
@@ -270,7 +219,6 @@
                   delSelect(id).then(res =>{
                       if(res.data.status == 1){
                           this.$Message.success(res.data.msg)
-                          this.handleGetSelects()
                       }else{
                           this.$Message.error(res.data.msg)
                       }
@@ -282,14 +230,9 @@
       },
       handleEdit (params) {
           let id = params.row.id;
-          getSelect(id).then(res =>{
-              if(res.data.status == 1){
-                  console.log(res);
-                  this.form.edit = res.data.data
-                  this.drawer.edit = true;
-              }else{
-                  this.$Message.error(res.data.msg);
-              }
+          one(id).then(res =>{
+              this.form.edit = res.data
+              this.drawer.edit = true;
           })
       },
       renderContent (h, { root, node, data }) {
@@ -323,7 +266,7 @@
       },
     },
     mounted () {
-      this.handleGetSelects();
+        this.handlePage()
     }
   }
   </script>

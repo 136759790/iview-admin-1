@@ -181,10 +181,7 @@ export default {
   },
   created(){
     getUserVo().then(res=>{
-      if(res.data.status == 1){
-          let array = res.data.data.ress;
-          this.$store.commit('setAccess',array)
-      }
+      this.$store.commit('setAccess',res.data.ress)
     })
   }
 }

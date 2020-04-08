@@ -333,7 +333,7 @@ export default {
     },
     handleGetOrgs(){
         getOrgs(this.query).then((res)=>{
-            this.data = res.data.rows;
+            this.data = res.data.list;
             this.page.current=res.data.pageNum
             this.page.total=res.data.total
             this.page.pageSize=res.data.pageSize

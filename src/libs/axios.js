@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Message } from 'iview'
 import store from '@/store'
 // import { Spin } from 'iview'
 const addErrorLog = errorInfo => {
@@ -50,10 +51,17 @@ class HttpRequest {
     // 响应拦截
     instance.interceptors.response.use(res => {
       this.destroy(url)
-      const { data, status } = res
-      return { data, status }
+      if(res.data.status == 1){
+        // Message.success(res.data.msg);
+      }else if(res.data.status == 2){
+        //静默成功
+      }else{
+        Message.error('系统繁忙请联系管理员!');
+      }
+      return res.data
     }, error => {
       this.destroy(url)
+      Message.error('系统繁忙请联系管理员!');
       addErrorLog(error.response)
       return Promise.reject(error)
     })
