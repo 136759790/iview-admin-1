@@ -152,6 +152,15 @@ export default [
           title: '商店管理'
         },
         component: () => import('@/view/mp/menu/shop.vue')
+      },
+      {
+        path: 'mp_menu_menu',
+        name: 'mp_menu_menu',
+        meta: {
+          icon: 'ios-shirt',
+          title: '菜品管理'
+        },
+        component: () => import('@/view/mp/menu/menu.vue')
       }
     ]
   },

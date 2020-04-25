@@ -64,10 +64,10 @@ export default {
   methods: {
       handleInitRes(role_id){
             getResTree(role_id).then(res => {
-                this.dataMyRes = res.data;
+                this.dataMyRes = res;
             });
             getResTree().then(res => {
-                this.dataAllRes = res.data;
+                this.dataAllRes = res;
             });
       },
       handleGetRess(type){
@@ -78,12 +78,11 @@ export default {
             this.queryParams[type].total=this.page[type].total
             this.queryParams[type].rows=this.page[type].pageSize
             getRess(this.queryParams[type]).then((res)=>{
-                this.data[type] = res.data.data.rows;
-                this.page[type].current=res.data.data.pageNum
-                this.page[type].total=res.data.data.total
-                this.page[type].pageSize=res.data.data.pageSize
-            }).catch(e=>{
-            });
+                this.data[type] = res.data.list;
+                this.page[type].current=res.data.pageNum
+                this.page[type].total=res.data.total
+                this.page[type].pageSize=res.data.pageSize
+            })
             this.query={}
         },
         renderAllContent (h, { root, node, data }) {
@@ -116,16 +115,9 @@ export default {
                                         res_id:res_id
                                     }
                                     addRoleRes(data).then(res => {
-                                        if(res.data.status == 1){
-                                             this.$Message.success(res.data.msg)
-                                             this.handleInitRes(this.role_id)
-                                        }else{
-                                             this.$Message.error(res.data.msg)
-                                        }
-                                    }).catch(e =>{
-                                        console.log(e);
-                                        this.$Message.error("操作失败，请联系管理员。")
-                                    });
+                                        this.$Message.success(res.msg)
+                                        this.handleInitRes(this.role_id)
+                                    })
                                  }
                             }
                         })

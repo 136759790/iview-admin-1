@@ -224,14 +224,10 @@ export default {
         this.$refs[name].validate((valid) => {
             if (valid) {
                 addOrUpdateRes(this.form.edit).then(res=>{
-                    if(res.data.status == 1){
-                        this.$Message.success(res.data.msg);
-                        this.handleGetRess();
-                        this.$refs[name].resetFields();
-                        this.drawer.edit=false
-                    }else{
-                        this.$Message.error(res.data.msg);
-                    }
+                    this.$Message.success(res.msg);
+                    this.handleGetRess();
+                    this.$refs[name].resetFields();
+                    this.drawer.edit=false
                 }).catch(e=>{
                     console.log(e);
                 });
@@ -250,7 +246,7 @@ export default {
     },
     handleGetResTree(){
         resTree({}).then((res)=>{
-            this.options = res.data.data;
+            this.options = res.data;
         });
     },
     handleDelete (params) {
@@ -275,11 +271,9 @@ export default {
     handleEdit (params) {
         let id = params.row.id;
         getRes(id).then(res =>{
-            if(res.data.status == 1){
-                this.handleGetResTree();
-                this.form.edit = res.data.data
-                this.drawer.edit = true;
-            }
+            this.handleGetResTree();
+            this.form.edit = res.data
+            this.drawer.edit = true;
         })
     }
   },

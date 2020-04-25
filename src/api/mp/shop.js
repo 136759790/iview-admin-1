@@ -20,6 +20,13 @@ export const del=(params)=>{
       params:params
     })
 }
+export const listByname=(name)=>{
+    return axios.request({
+      url: '/mp/shop/listByName',
+      method: 'get',
+      params:{name:name}
+    })
+}
 export const one= id =>{
     return axios.request({
       url: '/mp/shop/one',

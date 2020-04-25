@@ -196,10 +196,6 @@
           this.$refs[name].validate((valid) => {
               if (valid) {
                   save(data).then(res=>{
-                      this.data = res.data.list
-                      this.page.current=res.data.pageNum
-                      this.page.total=res.data.total
-                      this.page.pageSize=res.data.pageSize
                       this.$Message.success(res.msg);
                       this.$refs[name].resetFields();
                       this.drawer.edit=false
@@ -216,12 +212,8 @@
               content:'确定要删除id为：'+params.row.id+"的记录？",
               onOk:()=>{
                   let id = params.row.id;
-                  delSelect(id).then(res =>{
-                      if(res.data.status == 1){
-                          this.$Message.success(res.data.msg)
-                      }else{
-                          this.$Message.error(res.data.msg)
-                      }
+                  del({id:id}).then(res =>{
+                      this.$Message.success(res.msg)
                   })
               },
               onCancel:()=>{return false},

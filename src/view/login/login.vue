@@ -34,15 +34,9 @@ export default {
         password:password
       }
       login(data).then(res => {
-        if(res.data.status == 0){
-          this.$Message.error(res.data.msg);
-        }else if(res.data.status == 1){
-          // let array = res.data.data.ress;
-          // this.$store.commit('setAccess',array)
-          this.$router.push({
-            name: this.$config.homeName
-          })
-        }
+        this.$router.push({
+          name: this.$config.homeName
+        })
       }).catch(e => {
       })
       // this.handleLogin({ userName, password }).then(res => {

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routers'
-import iView from 'iview'
+import iView from 'view-design'
 import { isLogin } from '@/api/user'
 import config from '@/config'
 
@@ -29,6 +29,7 @@ router.beforeEach((to, from, next) => {
   iView.LoadingBar.start()
   if(to.name === LOGIN_PAGE_NAME){//登录页面不拦截
     isLogin().then(res=>{
+      debugger
       if(res.data === true){
         next({
           name: 'home' // 跳转到登录页

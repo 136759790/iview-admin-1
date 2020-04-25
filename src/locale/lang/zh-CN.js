@@ -27,6 +27,7 @@ export default {
 
   mp:'小程序',
   mp_menu_shop:'商店管理',
+  mp_menu_menu:'菜品管理',
 
   components: '组件',
   count_to_page: '数字渐变',
