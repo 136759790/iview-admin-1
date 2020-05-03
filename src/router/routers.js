@@ -85,6 +85,15 @@ export default [
         component: orgVue
       },
       {
+        path: 'tenant',
+        name: 'backend_tenant',
+        meta: {
+          icon: 'ios-git-network',
+          title: '租户管理'
+        },
+        component: () => import('@/view/backend/tenant.vue')
+      },
+      {
         path: 'self',
         name: 'backend_self',
         meta: {

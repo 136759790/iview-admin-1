@@ -6,6 +6,7 @@ export default {
   backend_res: '资源管理',
   backend_org: '组织管理',
   backend_self: '个人中心',
+  backend_tenant: '租户管理',
 
   truck: '卡车管理',
   truck_driver: '司机信息',
