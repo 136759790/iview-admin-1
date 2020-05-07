@@ -143,7 +143,7 @@
 <script>
 import BaseUpload from '@/view/base/base_upload'
 import UserDetail from '@/view/backend/user_detail'
-import { getAllUser, isExist, addUser, deleteUser, getUser, updateUser } from '@/api/user'
+import { getAllUser, isExist, saveUser, deleteUser, getUser } from '@/api/user'
 export default {
   components: {
     BaseUpload
@@ -321,7 +321,7 @@ export default {
     handleSubmit (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          addUser(this.form.edit).then(res => {
+          saveUser(this.form.edit).then(res => {
             if (res.data.status == 1) {
               this.$Message.success('保存成功')
               this.handleGetUsers()
@@ -337,7 +337,7 @@ export default {
     handleUpdate (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          updateUser(this.form.update).then(res => {
+          saveUser(this.form.update).then(res => {
             if (res.data.status == 1) {
               this.$Message.success('修改成功')
               this.handleGetUsers()

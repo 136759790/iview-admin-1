@@ -1,90 +1,117 @@
 <template>
     <div>
+        {{username}}
+        <Button type="primary" @click="handleQueryUser" slot="append" icon="ios-search">选择人员</Button>
+        <Modal v-model="show" width="1200px" title="请选择人员">
+            <Card>
+                <div class="search-con search-con-top">
+                    <Input clearable placeholder="输入关键字搜索" class="search-input" v-model="query.nickname" />
+                    <Button @click="handleGetUsers" class="search-btn" type="primary">
+                        <Icon type="search" />搜索</Button>
+                </div>
+                <Table size="small" :columns="columns" :data="data"></Table>
+                <Page :total="page.total" :current="page.current" :page-size="page.pageSize" size="small" show-total
+                    style="margin: 10px 0" @on-change="handleChangePage" />
+            </Card>
+        </Modal>
     </div>
 </template>
 
 <script>
-    import config from '@/config'
-    import { getAttaches,deleteAttach } from '@/api/base/attach'
+    import { pageUser,oneUser} from '@/api/user'
     export default {
         props: {
-            multiple:{
-                type:Boolean,
-                default:false
+            multiple: {
+                type: Boolean,
+                default: false
+            },
+            id:{
+                type:Number
             }
         },
         data() {
             return {
+                username:'',
+                show: false,
+                columns: [
+                    { title: '昵称', key: 'nickname' },
+                    { title: '帐号', key: 'account' },
+                    { title: '创建时间', key: 'ctime' },
+                    {
+                        title: '操作',
+                        key: 'status',
+                        width: 150,
+                        align: 'center',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.handleChooseUser(params)
+                                        }
+                                    }
+                                }, '选择'),
+                            ]);
+                        }
+                    }
+                ],
+                data: [],
+                page: {
+                    current: 1,
+                    total: 0,
+                    pageSize: 10
+                },
+                query: {
+                    nickname: '',
+                }
             }
         },
         computed: {
-            show() {
-                return this.fileList && this.fileList.length > 0
-            }
         },
         methods: {
-            handleSuccess(res, file) {
-                if(this.multiple){
-                    this.fileList.push(res.data)
-                }else{
-                    this.fileList=[res.data]
-                }
-                this.$emit("on-success", res.data)
+            handleQueryUser() {
+                this.show = true
             },
-            handleInitAttach() {
-                if(this.module_id){
-                    getAttaches(this.module_type, this.module_id).then(res => {
-                        this.fileList = res.data
-                    })
-                }
+            handleGetUsers(){
+                pageUser(this.query).then((res)=>{
+                    this.data = res.data.list;
+                    this.page.current=res.data.pageNum
+                    this.page.total=res.data.total
+                    this.page.pageSize=res.data.pageSize
+                });
+            },
+            handleChooseUser(params){
+                this.username = params.row.nickname
+                this.$emit("on-ok", params.row)
+                this.show=false
+                this.query={}
+            },
+            handleChangePage(page){
+                this.query.page = page;
+                this.handleGetUsers();
+            },
+            handleShowUser(id){
+                oneUser(id).then(res=>{
+                    this.username = res.data.nickname
+                })
             }
         },
         watch: {
         },
         mounted() {
-            this.handleInitAttach()
+            this.handleGetUsers()
+            if(id){
+                this.handleShowUser(id)
+            }
         }
     }
 </script>
 <style>
-    .demo-upload-list {
-        display: inline-block;
-        width: 60px;
-        height: 60px;
-        text-align: center;
-        line-height: 60px;
-        border: 1px solid transparent;
-        border-radius: 4px;
-        overflow: hidden;
-        background: #fff;
-        position: relative;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
-        margin-right: 4px;
-    }
-
-    .demo-upload-list img {
-        width: 100%;
-        height: 100%;
-    }
-
-    .demo-upload-list-cover {
-        display: none;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(0, 0, 0, .6);
-    }
-
-    .demo-upload-list:hover .demo-upload-list-cover {
-        display: block;
-    }
-
-    .demo-upload-list-cover i {
-        color: #fff;
-        font-size: 20px;
-        cursor: pointer;
-        margin: 0 2px;
-    }
 </style>

@@ -115,7 +115,7 @@
 
 <script>
 import './index.less'
-import { getCurrentUser } from '@/api/user'
+import { currentUser } from '@/api/user'
 export default {
   data () {
     return {
@@ -133,7 +133,7 @@ export default {
   },
   methods: {
       handleGetUser(){
-          getCurrentUser().then(res =>{
+        currentUser().then(res =>{
               if(res.data.status == 1){
                 this.user = res.data.data
               }

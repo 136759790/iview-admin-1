@@ -37,7 +37,7 @@
     </div>
 </template>
 <script>
-import { getAllUser,isExist,addUser,deleteUser,getUser,updateUser } from '@/api/user'
+import { pageUser} from '@/api/user'
 import { listRole,updateRole,deleteRole,getRole,isCodeExsits,getResTree,addRoleRes,deleteRoleRes,addRoleUser,delRoleUser } from '@/api/role'
 export default {
   props: {
@@ -167,8 +167,8 @@ export default {
             this.queryParams[type].current=this.page[type].current
             this.queryParams[type].total=this.page[type].total
             this.queryParams[type].rows=this.page[type].pageSize
-            getAllUser(this.queryParams[type]).then((res)=>{
-                this.data[type] = res.data.rows;
+            pageUser(this.queryParams[type]).then((res)=>{
+                this.data[type] = res.data.list;
                 this.page[type].current=res.data.pageNum
                 this.page[type].total=res.data.total
                 this.page[type].pageSize=res.data.pageSize

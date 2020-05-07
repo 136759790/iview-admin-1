@@ -6,7 +6,7 @@ export const login = ({ username, password }) => {
     password
   }
   return axios.request({
-    url: '/sys/login',
+    url: '/user/login',
     data,
     method: 'post'
   })
@@ -17,30 +17,24 @@ export const isLogin=()=>{
     method: 'get'
   })
 }
-export const addUser=(data)=>{
+export const saveUser=(data)=>{
   return axios.request({
-    url: '/sys/add/user',
+    url: '/user/save',
     method: 'post',
     data:data
   })
 }
-export const getCurrentUser=()=>{
+export const currentUser=()=>{
   return axios.request({
-    url: '/sys/user/login',
+    url: '/user/current',
     method: 'get',
-  })
-}
-export const updateUser=(data)=>{
-  return axios.request({
-    url: '/sys/update/user',
-    method: 'post',
-    data:data
   })
 }
 export const deleteUser=(id)=>{
   return axios.request({
-    url: '/sys/user/delete/'+id,
+    url: 'user/delete',
     method: 'get',
+    params:{id:id}
   })
 }
 export const isExist=(username)=>{
@@ -50,17 +44,18 @@ export const isExist=(username)=>{
     method: 'get'
   })
 }
-export const getAllUser= query =>{
+export const pageUser= query =>{
   return axios.request({
-    url: '/sys/users',
-    params:query,
-    method: 'get'
+    url: '/user/page',
+    data:query,
+    method: 'post'
   })
 }
-export const getUser= id =>{
+export const oneUser= id =>{
   return axios.request({
-    url: '/sys/user/'+id,
-    method: 'get'
+    url: '/user/one',
+    method: 'get',
+    params:{id:id}
   })
 }
 

@@ -73,7 +73,7 @@
 import './index.less'
 import RoleConfigUser from '@/view/backend/role_config_user'
 import RoleConfigRes from '@/view/backend/role_config_res'
-import { getAllUser,isExist,addUser,deleteUser,getUser,updateUser } from '@/api/user'
+import { getAllUser,isExist,deleteUser,getUser,saveUser } from '@/api/user'
 import { listRole,updateRole,deleteRole,getRole,isCodeExsits,getResTree } from '@/api/role'
 export default {
     components: {

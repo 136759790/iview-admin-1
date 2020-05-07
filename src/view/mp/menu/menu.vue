@@ -92,9 +92,9 @@
                         <FormItem label="分组名称：" prop="name">
                             <Input v-model="form.group.name" placeholder="请输入分组名称" />
                         </FormItem>
-                        <FormItem label="选择商店：" prop="shop_id">
-                            <Select disabled class="search-col" v-model="form.group.shop_id" placeholder="选择商店">
-                                <Option v-for="(option, index) in options_shop" :value="option.value" :key="index">
+                        <FormItem label="选择项目：" prop="project_id">
+                            <Select disabled class="search-col" v-model="form.group.project_id" placeholder="选择项目">
+                                <Option v-for="(option, index) in options_project" :value="option.value" :key="index">
                                     {{option.label}}
                                 </Option>
                             </Select>
@@ -106,12 +106,12 @@
                     </div>
                 </Drawer>
             </TabPane>
-            <Button @click="handleChangeShop" type="primary" slot="extra">切换商店</Button>
+            <Button @click="handleChangeProject" type="primary" slot="extra">切换商店</Button>
         </Tabs>
         <!-- 首屏弹窗 -->
-        <Modal v-model="modal_shop" :closable="false" :mask-closable="false">
-            <Select clearable class="search-col" v-model="current_shop" placeholder="选择商店">
-                <Option v-for="(option, index) in options_shop" :value="option.value" :key="index">
+        <Modal v-model="modal_project" :closable="false" :mask-closable="false">
+            <Select clearable class="search-col" v-model="current_project" placeholder="选择商店">
+                <Option v-for="(option, index) in options_project" :value="option.value" :key="index">
                     {{option.label}}
                 </Option>
             </Select>
@@ -126,7 +126,7 @@
     import './index.less'
     import { mapState } from 'vuex'
     import { save, del, page, one,direction, saveGroup, pageGroup, delGroup, oneGroup, listGroup } from '@/api/mp/menu'
-    import { listByname } from '@/api/mp/shop'
+    import { projectSave, projectOne, projectPage, projectDel } from '@/api/backend/project'
     import { getAllUser } from '@/api/user'
     import GroupExpand from './group-expand.vue';
     import MenuExpand from './menu-expand.vue';
@@ -137,8 +137,8 @@
         },
         data() {
             return {
-                current_shop: '',
-                options_shop: [],
+                current_project: '',
+                options_project: [],
                 options: [
                     { label: "在售", value: 1 },
                     { label: "下架", value: 0 }
@@ -321,8 +321,8 @@
             }
         },
         computed: {
-            modal_shop() {
-                return this.$store.state.menu.shopId ? false : true
+            modal_project() {
+                return this.$store.state.project.id ? false : true
             }
         },
         methods: {
@@ -336,8 +336,8 @@
             handleSuccess(data) {
                 this.form.edit.attach_id = data.id
             },
-            handleChangeShop() {
-                this.$store.commit("setShopID", null)
+            handleChangeProject() {
+                this.$store.commit("setProjectId", null)
             },
             handleChangeGroupPage() {
 
@@ -350,20 +350,10 @@
                     this.page_group.pageSize = res.data.pageSize
                 })
             },
-            filterGroup(name) {
-                listByname(name).then(res => {
-                    res.data.forEach(e => {
-                        this.options_shop.push({
-                            value: e.id,
-                            label: e.name
-                        })
-                    })
-                })
-            },
-            handleInitShop() {
-                listByname().then(res => {
-                    res.data.forEach(e => {
-                        this.options_shop.push({
+            handleInitProject() {
+                projectPage({}).then(res => {
+                    res.data.list.forEach(e => {
+                        this.options_project.push({
                             value: e.id,
                             label: e.name
                         })
@@ -372,7 +362,7 @@
             },
             newGroup() {
                 this.drawer.group = true
-                this.form.group.shop_id = this.$store.state.menu.shopId
+                this.form.group.project_id = this.$store.state.project.id
             },
             addGroup(name) {
 
@@ -406,7 +396,7 @@
                 this.params.page = page;
             },
             handlePage() {
-                this.params.shop_id = this.$store.state.menu.shopId
+                this.params.project_id = this.$store.state.project.id
                 page(this.params).then(res => {
                     this.data = res.data.list
                     this.page.current = res.data.pageNum
@@ -416,7 +406,7 @@
             },
             handleSubmit(name) {
                 let data = this.form.edit
-                data.shop_id = this.$store.state.menu.shopId
+                data.project_id = this.$store.state.project.id
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         if(!data.id){//新增
@@ -532,16 +522,16 @@
             },
         },
         mounted() {
-            if (!this.modal_shop) {
+            if (!this.modal_project) {
                 this.handlePage()
                 this.searchGroup()
             }
-            this.handleInitShop()
+            this.handleInitProject()
         },
         watch: {
-            current_shop(val, oldVal) {
+            current_project(val, oldVal) {
                 if (val) {
-                    this.$store.commit("setShopID", val)
+                    this.$store.commit("setProjectId", val)
                     this.handlePage()
                     this.searchGroup()
                 }

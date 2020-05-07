@@ -1,29 +1,29 @@
 import axios from '@/libs/api.request'
 
-export const tenantSave = (data) => {
+export const projectSave = (data) => {
   return axios.request({
-    url: '/tenant/save',
+    url: '/project/save',
     method: 'post',
     data: data
   })
 }
-export const tenantOne = (id) => {
+export const projectOne = (id) => {
   return axios.request({
-    url: '/tenant/one',
+    url: '/project/one',
     method: 'get',
     params: {id:id}
   })
 }
-export const tenantPage = (data) => {
+export const projectPage = (data) => {
   return axios.request({
-    url: '/tenant/page',
+    url: '/project/page',
     method: 'post',
     data: data
   })
 }
-export const tenantDel = (id) => {
+export const projectDel = (id) => {
   return axios.request({
-    url: '/tenant/delete',
+    url: '/project/delete',
     method: 'get',
     params: {id:id}
   })

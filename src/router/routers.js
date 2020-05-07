@@ -94,6 +94,15 @@ export default [
         component: () => import('@/view/backend/tenant.vue')
       },
       {
+        path: 'project',
+        name: 'backend_project',
+        meta: {
+          icon: 'ios-git-network',
+          title: '项目管理'
+        },
+        component: () => import('@/view/backend/project.vue')
+      },
+      {
         path: 'self',
         name: 'backend_self',
         meta: {

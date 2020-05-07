@@ -11,7 +11,7 @@
                 </Col>
                 <Col span="8">
                     <span>账号：</span>
-                    <span>{{row.username}}</span>
+                    <span>{{row.account}}</span>
                 </Col>
                 <Col span="8">
                     <span>昵称：</span>
@@ -21,73 +21,19 @@
             <br>
             <Row>
                 <Col span="8">
-                    <span>年龄：</span>
-                    <span>{{row.age}}</span>
-                </Col>
-                <Col span="8">
                     <span>手机：</span>
-                    <span>{{row.phonenumber}}</span>
+                    <span>{{row.phone}}</span>
                 </Col>
                 <Col span="8">
                     <span>email：</span>
                     <span>{{row.email}}</span>
                 </Col>
-            </Row>
-            <br>
-            <Row>
-                <Col span="8">
-                    <span>地址：</span>
-                    <span>{{row.address}}</span>
-                </Col>
                 <Col span="8">
                     <span>创建时间：</span>
-                    <span>{{row.create_time}}</span>
-                </Col>
-                <Col span="8">
-                    <span>状态：</span>
-                    <span>{{row.status == 1?'有效':'无效'}}</span>
+                    <span>{{row.ctime}}</span>
                 </Col>
             </Row>
         </Card><br>
-        <Card>
-            <p slot="title">微信信息</p>
-            <Row>
-                <Col span="8">
-                    <span>昵称：</span>
-                    <span>{{wx.nickname}}</span>
-                </Col>
-                <Col span="8">
-                    <span>openid：</span>
-                    <span>{{wx.openid}}</span>
-                </Col>
-                <Col span="8">
-                    <span>性别：</span>
-                    <span>{{wx.sex}}</span>
-                </Col>
-            </Row>
-            <br>
-            <Row>
-                <Col span="8">
-                    <span>国家：</span>
-                    <span>{{wx.country}}</span>
-                </Col>
-                <Col span="8">
-                    <span>省份：</span>
-                    <span>{{wx.province}}</span>
-                </Col>
-                <Col span="8">
-                    <span>城市：</span>
-                    <span>{{wx.city}}</span>
-                </Col>
-            </Row>
-            <br>
-            <Row>
-                <Col span="8">
-                    <span>头像：</span>
-                    <span><img width="80px"  :src="wx.headimgurl"></span>
-                </Col>
-            </Row>
-        </Card>
   </div>
 </template>
 
