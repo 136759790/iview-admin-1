@@ -53,11 +53,9 @@
                         <Row :gutter="32">
                             <Col span="24">
                             <FormItem label="菜品分组：" prop="group_id" label-position="left">
-                                <Select filterable clearable class="search-col" v-model="form.edit.group_id"
+                                <Select filterable clearable  v-model="form.edit.group_id"
                                     placeholder="请选择分组">
-                                    <Option v-for="(option, index) in options_group" :value="option.id" :key="index">
-                                        {{option.name}}
-                                    </Option>
+                                    <Option v-for="(option, index) in options_group" :value="option.id" :key="index">{{option.name}}</Option>
                                 </Select>
                             </FormItem>
                             </Col>
@@ -178,7 +176,7 @@
                 rules: {
                     edit: {
                         name: [{ required: true, message: '名称不能为空', trigger: 'blur' }],
-                        price: [{ required: true, message: '价格不能为空', trigger: 'blur',type:'number' }],
+                        price: [{ required: true, message: '价格不能为空', trigger: 'blur' }],
                         tag_id: [{ required: true, message: '标签不能为空', trigger: 'change',type:'number' }],
                         group_id: [{ required: true, message: '分组不能为空', trigger: 'change',type:'number' }],
                         desc: [{ required: true, message: '描述不能为空', trigger: 'blur' }],
