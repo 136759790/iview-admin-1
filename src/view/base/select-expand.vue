@@ -167,8 +167,8 @@ export default {
     },
     handleGetOptionTree(code){
         getOptionsMobile(code).then(res => {
-            if(res.data.status == 1){
-                this.options = res.data.data
+            if(res.status == 1){
+                this.options = res.data
             }
         });
     },
@@ -178,7 +178,7 @@ export default {
             if (valid) {
                 this.form.edit.select_code = this.row.code
                 saveOption(this.form.edit).then(res=>{
-                    if(res.data.status == 1){
+                    if(res.status == 1){
                         this.$Message.success(res.data.msg);
                         this.handleGetOptions(rowCode);
                         this.$refs[name].resetFields();
@@ -200,7 +200,7 @@ export default {
                 let id = params.row.id;
                 let code = params.row.select_code;
                 delOption(id).then(res =>{
-                    if(res.data.status == 1){
+                    if(res.status == 1){
                         this.$Message.success(res.data.msg)
                         this.handleGetOptions(code)
                     }else{
@@ -215,9 +215,8 @@ export default {
     handleEdit (params) {
         let id = params.row.id;
         getOption(id).then(res =>{
-            if(res.data.status == 1){
-                console.log(res);
-                this.form.edit = res.data.data
+            if(res.status == 1){
+                this.form.edit = res.data
                 this.modal.edit = true
             }
         })
@@ -225,8 +224,8 @@ export default {
     handleGetOptions(code){
         let param={code:code}
         getOptions(param).then(res =>{
-            if(res.data.status == 1){
-                this.data_option = res.data.data
+            if(res.status == 1){
+                this.data_option = res.data
             }
         });
     },
