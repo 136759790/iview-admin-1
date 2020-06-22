@@ -29,7 +29,6 @@ router.beforeEach((to, from, next) => {
   iView.LoadingBar.start()
   if(to.name === LOGIN_PAGE_NAME){//登录页面不拦截
     isLogin().then(res=>{
-      debugger
       if(res.data === true){
         next({
           name: 'home' // 跳转到登录页

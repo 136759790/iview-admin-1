@@ -63,12 +63,12 @@ export default {
   },
   methods: {
       handleInitRes(role_id){
-            getResTree(role_id).then(res => {
-                this.dataMyRes = res;
-            });
-            getResTree().then(res => {
-                this.dataAllRes = res;
-            });
+        getResTree(role_id).then(res => {
+            this.dataMyRes = res;
+        });
+        getResTree().then(res => {
+            this.dataAllRes = res;
+        });
       },
       handleGetRess(type){
             if(type == 'my'){

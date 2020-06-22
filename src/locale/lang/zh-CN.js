@@ -8,6 +8,7 @@ export default {
   backend_self: '个人中心',
   backend_tenant: '租户管理',
   backend_project: '项目管理',
+  backend_apply: '审核管理',
 
   truck: '卡车管理',
   truck_driver: '司机信息',

@@ -103,6 +103,15 @@ export default [
         component: () => import('@/view/backend/project.vue')
       },
       {
+        path: 'apply',
+        name: 'backend_apply',
+        meta: {
+          icon: 'ios-git-network',
+          title: '审核管理'
+        },
+        component: () => import('@/view/backend/apply.vue')
+      },
+      {
         path: 'self',
         name: 'backend_self',
         meta: {
