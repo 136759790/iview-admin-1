@@ -42,20 +42,8 @@ export default {
         },
         columns: [
             {title: '#',key: 'id'},
-            {   
-                title: '申请人姓名',
-                key: 'data',
-                render:(h,params) =>{
-                    return h('span',JSON.parse(params.row.data).name)
-                }
-            },
-            {   
-                title: '手机号',
-                key: 'account',
-                render:(h,params) =>{
-                    return h('span',JSON.parse(params.row.data).phoneNum)
-                }
-            },
+            {title: '申请人姓名',key: 'applicant_name'},
+            {title: '手机号',key: 'applicant_phone'},
             {title: '申请时间',key: 'ctime'},
             {   
                 title: '申请类型',
