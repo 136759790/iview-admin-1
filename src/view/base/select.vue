@@ -181,8 +181,8 @@ export default {
         this.select_id = params.row.id;
         this.select_name = params.row.name;
         getOptionTree(params.row.code).then(res => {
-            if(res.data.status == 1){
-                this.data_tree = res.data.data
+            if(res.status == 1){
+                this.data_tree = res.data
                 this.drawer.manage = true
             }
         });
